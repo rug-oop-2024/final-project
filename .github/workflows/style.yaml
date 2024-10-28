@@ -31,7 +31,7 @@ jobs:
         run: |
           echo "[flake8]" > .flake8
           echo "extend-ignore = E402" >> .flake8
-          echo "exclude = .github" >> .flake8
+          echo "exclude = .github,autoop/tests" >> .flake8
           echo "enable-extensions = ANN002,ANN003,ANN201,ANN202,ANN203,ANN204,ANN205,ANN206,ANN401,ANN402,D101,D102,D103,D104,D105,D106,D107" >> .flake8
 
       - name: Run flake8
