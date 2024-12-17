@@ -35,6 +35,11 @@ By considering a dataset of $n$ data points, $\hat{y}^{(i)}$ as the model predic
   - For other classification metrics, be careful that these metrics must be for generic multi-class classification tasks and not for binary classification (binary classification = 2 classes, multi-class classification = more than 2 classes). Metrics such as "plain" Precision and F-1 score are not suitable for multi-class classification tasks.
 - **Dataset**: an artifact that represents tabular data (simplified as CSV). In practice, datasets are usually split between a **training set** (which is used to train one or more models) and a **test set** (which is used to evaluate the model's performance). The training and test set must not overlap. The training and testing split is usually operated randomly and controlled by an argument that controls the % of the dataset that goes to the training set.
 - **Model**: a function that maps input features to a target feature (also known as *response*) derived from a set of observations. Can be either a classification or a regression task, as seen during the lectures and assignments. A model has a `parameters` attribute that allows it to be saved and loaded, restoring the state of the model. Contrary to the `Model` class saw during assignment 1, `parameters` include both strict parameters (those useful for prediction) and hyperparameters (those useful for training), similarly to what done in Scikit-learn.
+A model has a `fit` method and `predict` method:
+  - `fit` adjusts the parameters of the model to a specific training dataset (observations and ground truth)
+  - `predict` uses the parameters of the model to generate predictions according to a specific dataset (observations only)
+
+  Furthermore, a model which implements a façade over statsmodels has a `summary` method (calling the same `summary` method on the wrapped model), which allows to print the model's parameters with additional statistics.
 - **Feature**: individual measurable property, in this case, describing a column in a CSV and a type of either `categorical` or `numerical`. 
 - **Pipeline**: a state machine that orchestrates the different stages. (i.e., preprocessing, splitting, training, evaluation). Pipelines can evolve to be quite complex but in this assignment we simplify them.
 
@@ -115,7 +120,8 @@ In this section you will focus on building and testing the core functionality of
 - `ML/metric`: Implement the metric class in `autoop.core.ml.metric` with the `__call__` method.
 - `ML/metric/extensions`: add at 6 metrics, 3 must be suitable for `classification`. Compulsory metrics to be implemented are **Accuracy** for classification and **Mean Squared Error** for regression. You are **not** allowed to use facades/wrappers here, you should implement the metric using libraries such as `numpy`.
 - `ML/model`: implement the base model class in `autoop.core.ml.model`.
-- `ML/model/extensions`: Implement at least 3 classification models and 3 regression models. You may use the facade pattern or wrappers on existing libraries.
+- `ML/model/extensions`: Implement at least 3 classification models and 3 regression models. You may use the facade pattern or wrappers on existing libraries. One of the models has to be a linear model trained with [statsmodels](https://www.statsmodels.org/stable/gettingstarted.html).
+- `ML/model/extensions/summary`: for the statsmodels model(s) only, implement a `summary` method to print the coefficient of the model with the corresponding statistics (wrapper over statstools models `summary` method).
 - `ML/pipeline/evaluation`: Extend and modify the `execute` function to return the metrics both on the evaluation and training set.
 
 Make sure after implementing your classes you pass the respective tests. You will have to read existing implementation to understand how you need to implement your classes which is quite common working in a team or a company.
@@ -133,7 +139,7 @@ In this part you will integrate the library by importing your implemented classe
 - `ST/modelling/models`: Prompt the user to select a model based on the task type.
 - `ST/modelling/pipeline/split`: Prompt the user to select a dataset split.
 - `ST/modelling/pipeline/metrics`: Prompt the user to select a set of compatible metrics.
-- `ST/modelling/pipeline/summary`: Prompt the user with a beautifuly formatted pipeline summary with all the configurations.
+- `ST/modelling/pipeline/summary`: Prompt the user with a beautifuly formatted pipeline summary with all the configurations. In the case of the statsmodels model(s), this has to include a summary of the coefficients, obtained using the `model.summary()` method.
 - `ST/modelling/pipeline/train`: Train the class and report the results of the pipeline.
 
 ## Extra requirements
@@ -143,7 +149,8 @@ In this part you will integrate the library by importing your implemented classe
 - `ST/modelling/pipeline/save`: Prompt the user to give a name and version for the pipeline and convert it into an artifact which can be saved.
 - `ST/page/deployment`: Create a page where you can see existing saved pipelines.
 - `ST/deployment/load`: Allow the user to select existing pipelines and based on the selection show a pipeline summary.
-- `ST/deployment/predict`: Once the user loads a pipeline, prompt them to provide a CSV on which they can perform predictions.
+- `ST/deployment/predict`: Once the user loads a pipeline, prompt them to provide a CSV on which they can perform predictions. The predictions have to be computed on the same input features as the trained pipeline; thus, the columns in the provided CSV have to have at least the same input features. 
+- `ST/deployment/metrics`: Once the predictions are computed, if the provided CSV file has a column with the same name as the target feature of the pipeline, provide the user with metrics on these predictions.
 
 # Part III: Go beyond
 

@@ -1,6 +1,15 @@
-# AutOOP your first AutoML library
+# AutOOP your first AutoML library - RESIT VERSION
 
 🎉🥳 Congratulations on making it to this final project! We are excited to see what you can do.
+
+## Important notes for resitters
+
+The resit version has some added requirements w.r.t. the original version. 
+Here are the main differences:
+
+* It is now **COMPULSORY** to work on a Unix-based environment. This means, either (a) use Linux or Mac, or (b) work in the WSL. In the latter case, please check [this documentation](https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-vscode) for setting up VSCode for working with the WSL.
+* There are stricter requirements for the modelling part; specifically, one of the model has to be a linear model trained using statsmodels. Further requirements apply (see modelling section for details). Requirement name: `ML/model/extensions` and `ML/model/extensions/summary`.
+* In the deployment part, the predictions need now to be paired with metric computations in case the ground truth variable is provided with the uploaded dataset. Requirement name: `ST/deployment/metrics`.
 
 ## Introduction
 
@@ -140,7 +149,7 @@ Notice that, in case two students claim to have worked together on the same poin
 
 1. If your code does not run (because of bad imports, non-existing files, etc.), the project will **not** be graded further and a 1.0 will be given.
    * Thus, remember to push your .csv datasets.
-2. Blatant disregard of OOP principles (e.g., using a largely imperative-style programming in the `autooop` library, consistently not using type hints...) will also result in the project being given a 1.0.
+2. Blatant disregard of OOP principles (e.g., using a largely imperative-style programming in the `autooop` library, consistently not using type hints...) within the autooop.core part will also result in the project being given a 1.0.
 
 ## Personal Rubric
 
@@ -161,6 +170,7 @@ If you did not implement the feature
 | `ML/metric/extensions`                | FN           |                      |         | |
 | `ML/model`                            | NF           |                      |         | |
 | `ML/model/extensions`                 | FN           |                      |         | |
+| `ML/model/extensions/summary`         | FN           |                      |         | |
 | `ML/pipeline/evaluation`              | FN           |                      |         | | 
 | `ST/page/datasets`                    | NF           |                      |         | |
 | `ST/datasets/management/create`       | FN           |                      |         | |
@@ -177,6 +187,7 @@ If you did not implement the feature
 | `ST/page/deployment`                  | FN           |                      |         | |
 | `ST/deployment/load`                  | FN           |                      |         | |
 | `ST/deployment/predict`               | FN           |                      |         | |
+| `ST/deployment/metrics`               | FN           |                      |         | |
 
 If you add extra features, please indicate them below:
 | Requirement                           | Type (FN/NF) | Implemented by       | Implementation Completed (add X if done) | Comment |
